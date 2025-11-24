@@ -106,12 +106,38 @@ th[scope="row"] {
 }
 
 td {
+    /* display: flex;
+    flex-direction: row; */
     text-align: center;
-    background-color: #ffffff
+    object-fit: cover;
 }
 
 tr:nth-of-type(even) {
     background-color: #eeeeee;
 }
 
+/* -------------------------------------------------------------------------------------------------------------------------------- */
 
+.table-btn-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px;
+    gap: 9px;
+}
+
+.edit-btn{
+    width: 100%;
+    padding: 4px;
+    background-color: #ffee00;
+    border: .1px solid rgb(160 160 160);
+}
+
+.delete-btn{
+    color: #ffffff;
+    width: 100%;
+    padding: 4px;
+    background-color: #ff2600;
+    border: .1px solid rgb(160 160 160);
+}
