@@ -1,4 +1,4 @@
-const josnDataArray = [];
+var josnDataArray = [];
 
 // function that will assign values in table
 
@@ -6,27 +6,79 @@ const josnDataArray = [];
 
 // form - table (cloumn (actions)) 2 buttons (edit | delete) - reflect updated changes on table
 
-//crerate a separate foprm (when edit is pressed - )
+// crerate a separate form (when edit is pressed  )
 
 
-function appendButton(row){
-    var td = document.createElement("td");
 
-    var div = document.createElement("div");
+function recreateTable(){
+    
+
+    for (let i = 0; i < josnDataArray.length; i++) {
+        addDataFieldInTable(i);
+    }
+}
+
+
+
+
+function editFunc(btnId){
+    document.getElementById(btnId).onclick = function(){
+        // add values of ID in form
+        console.log(btnId);
+    }
+}
+
+
+function deleteFunc(btnId){
+    document.getElementById(btnId).onclick = function () {
+        const rowId = btnId.split("-").pop();
+        const numRowId = Number(rowId)
+
+        // delete a row from html and josnDataArray
+        const tempJosnDataArray = josnDataArray.filter(item => item.id !== numRowId);
+        josnDataArray = tempJosnDataArray;
+
+        document.querySelector("#api-table tbody").innerHTML = "";
+        recreateTable();
+
+    }
+}
+
+
+// function to reproducce teh table
+
+async function createBtnElement(row, editBtnId, deleteBtnId) {
+    const td = document.createElement("td");
+
+    const div = document.createElement("div");
     div.setAttribute("class", "table-btn-container");
     td.appendChild(div);
 
-    var editBtn = document.createElement("button");
+    const editBtn = document.createElement("button");
     editBtn.innerHTML = "Edit"
     editBtn.setAttribute("class", "edit-btn");
+    editBtn.setAttribute("id", editBtnId);
     div.appendChild(editBtn);
 
-    var deleteBtn = document.createElement("button");
+    const deleteBtn = document.createElement("button");
     deleteBtn.innerHTML = "Delete"
     deleteBtn.setAttribute("class", "delete-btn");
+    deleteBtn.setAttribute("id", deleteBtnId);
     div.appendChild(deleteBtn);
 
     row.appendChild(td);
+}
+
+async function appendButton(row, rowId){
+    const editBtnId = `edit-btn-${rowId}`;
+    const deleteBtnId = `delete-btn-${rowId}`;
+
+    await createBtnElement(row, editBtnId, deleteBtnId);
+
+    editFunc(editBtnId);
+    deleteFunc(deleteBtnId);
+
+
     return;
 }
 
@@ -44,21 +96,20 @@ function addDataFieldInTable(index){
         <td class="title">${jsonObject.title}</td>
         <td class="api-body">${jsonObject.body}</td>
     `;
-    appendButton(row);
+    appendButton(row, jsonObject.id);
 
     tableBody.appendChild(row);
-
 }
 
 async function getData(i) {
     try {
         const response = await fetch('https://jsonplaceholder.typicode.com/posts/' + ((i+1)*10));
         josnDataArray[i] = await response.json();
-        console.log(josnDataArray[i]);
+        // console.log(josnDataArray[i]);
 
         addDataFieldInTable(i);
 
-        return data;
+        return josnDataArray[i];
 
     } catch (error) {
         console.error('Error:', error);
@@ -66,12 +117,8 @@ async function getData(i) {
 }
 
 
+
 for (let i = 0; i < 10; i++){
     getData(i);
-    // addDataFieldInTable(josnDataArray[i]);
 }
-
-
-
-
 

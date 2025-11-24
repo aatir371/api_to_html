@@ -56,6 +56,14 @@
 
 /* -------------------------------------------------------------------------------------------------------------------------------- */
 
+.main{
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* -------------------------------------------------------------------------------------------------------------------------------- */
+
 .table-section{
     background-color: #ffffff;
     display: flex;
@@ -140,4 +148,27 @@ tr:nth-of-type(even) {
     padding: 4px;
     background-color: #ff2600;
     border: .1px solid rgb(160 160 160);
+}
+
+/* -------------------------------------------------------------------------------------------------------------------------------- */
+
+
+.form-section{
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    border: 16px solid rgb(0, 255, 102);
+
+}
+
+.form-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 1200px;
+    width: 100%;
+
+    border: 6px solid rgb(0, 0, 255);
 }
